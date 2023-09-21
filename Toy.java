@@ -51,3 +51,24 @@ class Toy {
         return frequency;
     }
 }
+
+public class ToyQueueApp {
+    public static void main(String[] args) {
+        PriorityQueue<Toy> toyQueue = new PriorityQueue<>((t1, t2) -> t2.getFrequency() - t1.getFrequency());
+
+        // Примеры строк для создания игрушек
+        String[] toyStrings = {
+            "1 2 конструктор",
+            "2 2 робот",
+            "3 6 кукла"
+        };
+
+        // Создаем игрушки из строк и добавляем их в очередь
+        for (String toyString : toyStrings) {
+            String[] parts = toyString.split(" ");
+            int id = Integer.parseInt(parts[0]);
+            int frequency = Integer.parseInt(parts[1]);
+            String name = parts[2];
+            Toy toy = new Toy(id, name, frequency);
+            toyQueue.add(toy);
+        }

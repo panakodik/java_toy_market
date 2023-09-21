@@ -72,3 +72,32 @@ public class ToyQueueApp {
             Toy toy = new Toy(id, name, frequency);
             toyQueue.add(toy);
         }
+
+        // Создаем файл для записи результатов
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("toy_results.txt"))) {
+            Random random = new Random();
+            for (int i = 0; i < 10; i++) {
+                // Генерируем случайное число от 1 до 10
+                int randomNumber = random.nextInt(10) + 1;
+                Toy selectedToy = null;
+
+                        // Определяем, какую игрушку выбрать в соответствии с вероятностью
+                if (randomNumber <= 2) {
+                    selectedToy = toyQueue.poll(); // 20% шанс выбора игрушки с наивысшей частотой
+                } else if (randomNumber <= 4) {
+                    selectedToy = toyQueue.poll(); // 20% шанс выбора игрушки с наивысшей частотой
+                } else {
+                    selectedToy = toyQueue.peek(); // 60% шанс выбора игрушки с наивысшей частотой
+                }
+
+                if (selectedToy != null) {
+                    // Записываем результат в файл
+                    writer.write(selectedToy.getName() + "\n");
+                    toyQueue.add(selectedToy); // Возвращаем игрушку в очередь
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
